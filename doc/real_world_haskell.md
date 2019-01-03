@@ -88,3 +88,91 @@ lines :: String -> [String]
 We can read the `->` above as "to", which loosely translates to "returns".
 The signature as a whole thus reads as "`lines` has the type `String` to list of `String`".
 
+A side effect introduces a dependency between the global state of the system and the behavior of a function.
+
+### Haskell source files, and writing simple functions
+
+Haskell source files are usually identified with a suffix of `.hs`.
+```haskell
+add a b = a + b
+```
+On the left hand side of the `=` is the name of the function, followed by the arguments to the function. On the right hand side is the body of the function.
+
+Haskell doesn't have a `return` keyword, as a function is a single expression, not a sequence of statements.
+The value of the expression is the result of the function.
+
+When you see an `=` symbol in Haskell code, it represents "meaning": the name on the left is defined to be the expression on the right.
+
+#### Just what is a variable, anyway?
+
+In Haskell, a variable provides a way to give a name to an expression.
+Once a variable is *bound to* (i.e. associated with) a particular expression, its value does not change: we can always use the name of the variable instead of writing out the expression, and get the same result either way.
+
+#### Conditional evaluation
+
+Like many other languages, Haskell has an `if` expression.
+
+Finally, our if expression spans several lines.
+We align the then and else branches under the if for neatness.
+So long as we use some indentation, the exact amount is not important.
+If we wish, we can write the entire expression on a single line.
+
+We will usually break an if expression across several lines to keep the predicate and each of the branches easier to follow.
+
+### Understanding evaluation by example
+
+#### Lazy evaluation
+
+In a language that uses *strict* evaluation, the arguments to a function are evaluated before the function is applied.
+Haskell chooses another path: *non-strict* evaluation.
+
+### Polymorphism in Haskell
+
+To capture this idea, its type signature contains a *type variable*.
+
+When a function has type variables in its signature, indicating that some of its arguments can be of any type, we call the function polymorphic.
+
+Parametric polymorphism is the most visible kind of polymorphism that Haskell supports.
+A parameterized type in Haskell is similar to a type variable in Java generics.
+
+### Why the Fuss over Purity?
+
+Few programming languages go as far as Haskell in insisting that purity should be the default.
+
+Because the result of applying a pure function can only depend on its arguments, we can often get a strong hint of what a pure function does by simply reading its name and understanding its type signature.
+
+Purity makes the job of understanding code easier.
+The behavior of a pure function does not depend on the value of a global variable, or the contents of a database, or the state of a network connection.
+Pure code is inherently modular: every function is self-contained and has a well-defined interface.
+
+A non-obvious consequence of purity being the default is that working with *impure* code becomes easier.
+Haskell encourages a style of programming in which we separate code that *must* have side effects from code that doesn't need side effects.
+In this style, impure code tends to be simple, with the "heavy lifting" performed in pure code.
+
+## Chapter 3
+
+### Defining a New Data Type
+
+### Type Synonyms
+
+We can introduce a *synonym* for an existing type at any time, in order to give a type a more descriptive name.
+
+The `type` keyword introduces a type synonym.
+The new name is on the left of the `=`, with the existing name on the right.
+The two names identify the same type, so type synonyms are *purely* for making code more readable.
+
+### Algebraic Data Types
+
+An algebraic data type can have more than one value constructor:
+```haskell
+data Bool =  False | True
+```
+When a type has more than one value constructor, they are usually referred to as *alternatives* or *cases*.
+We can use any one of the alternatives to create a value of that type.
+
+Each of an algebraic data type's value constructors can take zero or more arguments.
+
+### Pattern Matching
+
+Haskell has a simple, but tremendously useful, *pattern matching* facility that lets us do both of these things.
+
